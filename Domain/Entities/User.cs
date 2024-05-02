@@ -3,13 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-public class User
+public class User : BaseEntity
 {
-    /// <summary>
-    /// ID of the user
-    /// </summary>
-    public Guid Id { get; set; }
-
     /// <summary>
     /// User's login
     /// </summary>
@@ -26,16 +21,6 @@ public class User
     /// </summary>
     [EmailAddress]
     public string? Email { get; set; }
-
-    /// <summary>
-    /// Is user deleted?
-    /// </summary>
-    public bool IsDeleted { get; set; }
-
-    /// <summary>
-    /// Date of user's creation
-    /// </summary>
-    public DateTimeOffset DateAdd { get; set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// GUID of file

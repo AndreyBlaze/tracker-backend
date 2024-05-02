@@ -2,12 +2,8 @@
 
 namespace Domain.Entities;
 
-public class AppFile
+public class AppFile : BaseEntity
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    public Guid Id { get; set; }
     /// <summary>
     /// Кто загрузил файл
     /// </summary>
@@ -25,14 +21,6 @@ public class AppFile
     /// Размер файла
     /// </summary>
     public long FileSize { get; set; } = 0;
-    /// <summary>
-    /// Дата загрузки
-    /// </summary>
-    public DateTimeOffset DateAdd { get; set; } = DateTimeOffset.UtcNow;
-    /// <summary>
-    /// Удален ли файл
-    /// </summary>
-    public bool IsDeleted { get; set; } = false;
 
     #region NotMapped fields
     /// <summary>

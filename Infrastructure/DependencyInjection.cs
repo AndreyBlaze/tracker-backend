@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories.Impl;
+using Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +13,10 @@ public static class DependencyInjection
         services.AddDbContext<DbContext, ApplicationContext>(
             (serviceProvider, optionsBuilder) =>
                 optionsBuilder.UseNpgsql("Server=193.32.177.8;Port=5432;User Id=root;Password=arn~os21yp~IrER;Database=platform;"));
+
+        services
+            .AddScoped<IUsersRepository, UsersRepository>()
+            .AddScoped<ISessionRepository, SessionRepository>();
 
         return services;
     }

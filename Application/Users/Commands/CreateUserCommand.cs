@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Shared;
 
-namespace Application.Users.Commands.CreateUser;
+namespace Application.Users.Commands;
 
 public sealed record CreateUserCommand() : ICommand;
 

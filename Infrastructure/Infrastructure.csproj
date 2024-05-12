@@ -21,12 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="External\" />
-    <Folder Include="Persistence\Repositories\Interfaces\" />
-    <Folder Include="Persistence\Repositories\Impl\" />
   </ItemGroup>
 
 </Project>

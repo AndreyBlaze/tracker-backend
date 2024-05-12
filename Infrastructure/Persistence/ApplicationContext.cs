@@ -1,5 +1,4 @@
-﻿using Domain.Abstractions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
@@ -16,6 +15,7 @@ public sealed class ApplicationContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<AppFile> AppFiles => Set<AppFile>();
 
     /// <summary>
     /// On Configuring for migration

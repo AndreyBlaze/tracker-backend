@@ -1,12 +1,13 @@
-﻿using Shared;
+﻿using MediatR;
+using Shared;
 
 namespace Application.Abstractions.Messaging;
 
-public interface IQuery<TResponse>
+public interface IQuery<TResponse> : IRequest<Result<TResponse>>
 {
 }
 
-public interface IQueryHandler<TQuery, TResponse> where TQuery: IQuery<TResponse>
+public interface IQueryHandler<TQuery, TResponse> : IRequestHandler<TQuery, Result<TResponse>> where TQuery: IQuery<TResponse>
 {
-    Task<Result<TResponse>> Handle(TQuery query, CancellationToken cancellationToken);
+    
 }

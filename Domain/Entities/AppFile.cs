@@ -9,11 +9,6 @@ public class AppFile : BaseEntity
     /// </summary>
     public Guid? UserId { get; set; }
     /// <summary>
-    /// Пользователь
-    /// </summary>
-    [ForeignKey("UserId")]
-    public virtual User? User { get; set; }
-    /// <summary>
     /// Название файла
     /// </summary>
     public string? FileName { get; set; }

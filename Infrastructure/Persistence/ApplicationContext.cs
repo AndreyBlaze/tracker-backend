@@ -16,6 +16,14 @@ public sealed class ApplicationContext : DbContext
 
     public DbSet<User> Users => Set<User>();
     public DbSet<AppFile> AppFiles => Set<AppFile>();
+    public DbSet<Dashboard> Dashboards => Set<Dashboard>();
+    public DbSet<Message> Messages => Set<Message>();
+    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<ProjectMember> ProjectMembers => Set<ProjectMember>();
+    public DbSet<ProjectTask> ProjectTasks => Set<ProjectTask>();
+    public DbSet<Session> Sessions => Set<Session>();
+    public DbSet<TaskColumn> TaskColumns => Set<TaskColumn>();
+    public DbSet<ReadMessage> ReadMessages => Set<ReadMessage>();
 
     /// <summary>
     /// On Configuring for migration
@@ -23,7 +31,7 @@ public sealed class ApplicationContext : DbContext
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = "Server=193.32.177.8;Port=5432;User Id=root;Password=arn~os21yp~IrER;Database=platform;";
+        var connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=tracker;";
         optionsBuilder.UseNpgsql(connectionString);
     }
 

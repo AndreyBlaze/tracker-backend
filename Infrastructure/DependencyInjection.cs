@@ -16,7 +16,10 @@ public static class DependencyInjection
 
         services
             .AddScoped<IUsersRepository, UsersRepository>()
-            .AddScoped<ISessionRepository, SessionRepository>();
+            .AddScoped<ISessionRepository, SessionRepository>()
+            .AddScoped<IProjectsRepository, ProjectsRepository>()
+            .AddScoped<IDashboardsRepository, DashboardsRepository>()
+            .AddScoped<IProjectMembersRepository, ProjectMembersRepository>();
 
         return services;
     }

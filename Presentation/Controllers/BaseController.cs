@@ -19,5 +19,5 @@ public abstract class BaseController : ControllerBase
     /// <summary>
     /// Identity user
     /// </summary>
-    protected Guid? UserId => User.Claims.Any() ? Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value ?? string.Empty) : null;
+    protected Guid? UserId => User.Claims.Any() ? Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value ?? string.Empty) : null;
 }

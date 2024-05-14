@@ -45,7 +45,7 @@ public class AuthCommandHandler : ICommandHandler<AuthCommand, UserTokenData>
         user.DateUpdate = DateTimeOffset.UtcNow;
         await _usersRepository.UpdateAsync(user, CancellationToken.None);
 
-        var accessToken = _jwtService.CreateToken(new UserTokenInfo(session.Id, Guid.NewGuid(), user.UserName, user.Role.ToString()));
+        var accessToken = _jwtService.CreateToken(new UserTokenInfo(session.Id, user.Id, user.UserName, user.Role.ToString()));
 
         var userToken = new UserTokenData(accessToken,
             new SessionToken(session.Id, refreshTokenKey).ToString(),

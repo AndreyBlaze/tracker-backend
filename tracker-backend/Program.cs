@@ -111,7 +111,7 @@ namespace tracker_backend
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionTest");
 #if DEBUG
-            connectionString = "Server=193.32.177.8;Port=5432;User Id=root;Password=arn~os21yp~IrER;Database=platform;";
+            connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=tracker;";
 #endif
 
             Console.WriteLine(connectionString);

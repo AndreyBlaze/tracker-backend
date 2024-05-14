@@ -9,13 +9,15 @@
   <ItemGroup>
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Users\Queries\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="ProjectMembers\Queries\" />
+    <Folder Include="Projects\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,5 +10,5 @@ public class TaskColumn : BaseEntity
     [Required]
     public Guid DashboardId { get; set; }
 
-    public IEnumerable<Task>? Tasks { get; set;}
+    public IEnumerable<ProjectTask>? Tasks { get; set; }
 }

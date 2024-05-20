@@ -12,6 +12,6 @@ public class AuthOptions
     public string Issuer { get; set; } = null!;
     [Required]
     public string Audience { get; set; } = null!;
-    public int AccessTokenTtl { get; set; } = 60;
+    public int AccessTokenTtl { get; set; } = 1440;
     public int RefreshTokenTtl { get; set; } = 1440;
 }

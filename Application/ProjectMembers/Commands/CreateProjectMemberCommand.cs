@@ -1,11 +1,12 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities;
+using Domain.Types;
 using Infrastructure.Persistence.Repositories.Interfaces;
 using Shared;
 
 namespace Application.ProjectMembers.Commands;
 
-public record CreateProjectMemberCommand(Guid ProjectId, Guid UserId) : ICommand;
+public record CreateProjectMemberCommand(Guid ProjectId, Guid UserId, ProjectRoleType Role) : ICommand;
 
 public class CreateProjectMemberCommandHandler : ICommandHandler<CreateProjectMemberCommand>
 {
@@ -28,7 +29,8 @@ public class CreateProjectMemberCommandHandler : ICommandHandler<CreateProjectMe
             DateAdd = DateTimeOffset.UtcNow,
             DateUpdate = DateTimeOffset.UtcNow,
             ProjectId = request.ProjectId,
-            UserId = request.UserId
+            UserId = request.UserId,
+            Role = request.Role
         };
 
         try

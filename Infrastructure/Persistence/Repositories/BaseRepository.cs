@@ -6,6 +6,7 @@ using Infrastructure.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Shared;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -25,14 +26,16 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
 
     public Task<IReadOnlyCollection<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? whereExpression = null,
+        IEnumerable<IOrderByExpression<TEntity>>? orderByExpressions = default,
         params Expression<Func<TEntity, object?>>[] includes)
     {
-        return GetAllAsync(whereExpression, includes, CancellationToken.None);
+        return GetAllAsync(whereExpression, includes, orderByExpressions, CancellationToken.None);
     }
 
     public virtual async Task<IReadOnlyCollection<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? whereExpression,
         IEnumerable<Expression<Func<TEntity, object?>>>? includes = default,
+        IEnumerable<IOrderByExpression<TEntity>>? orderByExpressions = default,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -49,6 +52,24 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         if (whereExpression != null)
         {
             query = query.Where(whereExpression);
+        }
+        if (orderByExpressions?.Any() ?? false)
+        {
+            foreach(var exp in orderByExpressions)
+            {
+                switch (exp.FilterType)
+                {
+                    case Domain.Types.FilterType.Asc:
+                        query = query.OrderBy(exp.OrderExpression);
+                        break;
+                    case Domain.Types.FilterType.Desc:
+                        query = query.OrderByDescending(exp.OrderExpression);
+                        break;
+                    case Domain.Types.FilterType.None:
+                    default:
+                        break;
+                }
+            }
         }
 
         return await query.ToArrayAsync(cancellationToken);

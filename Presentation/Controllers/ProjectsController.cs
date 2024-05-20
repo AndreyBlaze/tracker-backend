@@ -1,5 +1,7 @@
 ﻿using Application.ProjectMembers.Commands;
 using Application.Projects.Commands;
+using Application.Projects.Queries;
+using Domain.Types;
 using DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,10 +26,27 @@ public class ProjectsController : BaseController
         
         if (res.IsSuccess)
         {
-            var firstMember = await _mediator.Send(new CreateProjectMemberCommand(ProjectId: res.Value, (Guid)UserId), ct);
+            var firstMember = await _mediator.Send(new CreateProjectMemberCommand(ProjectId: res.Value, (Guid)UserId, ProjectRoleType.Owner), ct);
             return Ok(res);
         }
 
         return BadRequest(res.Error);
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetAllAsync(FilterType date = FilterType.None, FilterType name = FilterType.None, string? search = null)
+    {
+        if (UserId is null) return Unauthorized();
+
+        ProjectFiltersDTO filter = new()
+        {
+            Date = date,
+            Name = name,
+            Search = search
+        };
+
+        var res = await _mediator.Send(new GetAllProjectsQuery(filter, (Guid)UserId));
+        return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
     }
 }

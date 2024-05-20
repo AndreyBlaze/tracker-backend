@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Types;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities;
 
@@ -10,5 +12,9 @@ public class ProjectMember : BaseEntity
     [Required]
     public Guid ProjectId { get; set; }
 
-    public Project Project { get; set; } = null!;
+    [Required]
+    public ProjectRoleType Role { get; set; }
+
+    //[JsonIgnore]
+    //public Project Project { get; set; } = null!;
 }

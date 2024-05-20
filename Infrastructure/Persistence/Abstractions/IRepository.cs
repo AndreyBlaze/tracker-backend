@@ -1,9 +1,11 @@
 ﻿using Domain.Entities;
+using Domain.Types;
 using Infrastructure.Persistence.Models;
 using Shared;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Abstractions;
+
 
 public interface IRepository<TEntity> where TEntity: class
 {
@@ -19,12 +21,14 @@ public interface IRepository<TEntity> where TEntity: class
 
     Task<IReadOnlyCollection<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? whereExpression = null,
+        IEnumerable<IOrderByExpression<TEntity>>? orderByExpressions = default,
         params Expression<Func<TEntity, object?>>[] includes);
 
     /// <exception cref="OperationCanceledException" />
     Task<IReadOnlyCollection<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? whereExpression,
         IEnumerable<Expression<Func<TEntity, object?>>>? includes = default,
+        IEnumerable<IOrderByExpression<TEntity>>? orderByExpressions = default,
         CancellationToken cancellationToken = default);
 
     Task<PaginationResult<TEntity>> GetAllWithPagingAsync(

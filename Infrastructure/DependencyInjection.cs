@@ -12,14 +12,16 @@ public static class DependencyInjection
     {
         services.AddDbContext<DbContext, ApplicationContext>(
             (serviceProvider, optionsBuilder) =>
-                optionsBuilder.UseNpgsql("Server=193.32.177.8;Port=5432;User Id=root;Password=arn~os21yp~IrER;Database=platform;"));
+                optionsBuilder.UseNpgsql("Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=tracker;"));
 
         services
             .AddScoped<IUsersRepository, UsersRepository>()
             .AddScoped<ISessionRepository, SessionRepository>()
             .AddScoped<IProjectsRepository, ProjectsRepository>()
             .AddScoped<IDashboardsRepository, DashboardsRepository>()
-            .AddScoped<IProjectMembersRepository, ProjectMembersRepository>();
+            .AddScoped<IProjectMembersRepository, ProjectMembersRepository>()
+            .AddScoped<ITaskColumnsRepository, TaskColumnsRepository>()
+            .AddScoped<ITasksRepository, TasksRepository>();
 
         return services;
     }

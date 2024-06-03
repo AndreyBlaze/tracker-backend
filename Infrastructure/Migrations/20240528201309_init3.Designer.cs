@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240520201203_update_projecttask")]
-    partial class update_projecttask
+    [Migration("20240528201309_init3")]
+    partial class init3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,7 +197,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ColumnId")
+                    b.Property<Guid?>("ColumnId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("DateAdd")
@@ -215,9 +216,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("TaskColumnId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("text");
@@ -227,7 +225,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskColumnId");
+                    b.HasIndex("ColumnId");
 
                     b.ToTable("ProjectTasks");
                 });
@@ -419,9 +417,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ProjectTask", b =>
                 {
-                    b.HasOne("Domain.Entities.TaskColumn", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("TaskColumnId");
+                    b.HasOne("Domain.Entities.TaskColumn", "Column")
+                        .WithMany()
+                        .HasForeignKey("ColumnId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Column");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReadMessage", b =>
@@ -475,11 +477,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Project", b =>
                 {
                     b.Navigation("ProjectMembers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TaskColumn", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

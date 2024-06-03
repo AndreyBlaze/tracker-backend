@@ -262,21 +262,23 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
 
         entity.DateUpdate = DateTimeOffset.UtcNow;
 
-        var existing = await GetByIdAsync(entity.Id, cancellationToken);
-        if (existing is null)
-        {
-            return await AddAsync(entity, cancellationToken);
-        }
+        //var existing = await GetByIdAsync(entity.Id, cancellationToken);
+        //if (existing is null)
+        //{
+        //    return await AddAsync(entity, cancellationToken);
+        //}
 
-        var writableProperties =
-            existing
-                .GetType()
-                .GetProperties()
-                .Where(x => x.GetSetMethod() is not null);
-        foreach (var property in writableProperties)
-        {
-            property.SetValue(existing, property.GetValue(entity));
-        }
+        //var writableProperties =
+        //    existing
+        //        .GetType()
+        //        .GetProperties()
+        //        .Where(x => x.GetSetMethod() is not null);
+        //foreach (var property in writableProperties)
+        //{
+        //    property.SetValue(existing, property.GetValue(entity));
+        //}
+        
+        _dbContext.Update(entity);
 
         try
         {
@@ -287,7 +289,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
             throw new UniqueViolationException(innerException: ex.InnerException);
         }
 
-        return existing;
+        return entity;
     }
 
     public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)

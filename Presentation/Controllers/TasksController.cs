@@ -23,4 +23,14 @@ public class TasksController : BaseController
         var res = await _mediator.Send(new CreateTaskCommand(model, (Guid)UserId));
         return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
     }
+
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> UpdateAsync(ProjectTaskDTO model, CancellationToken ct)
+    {
+        if (UserId is null) return Unauthorized();
+
+        var res = await _mediator.Send(new UpdateTaskCommand(model, (Guid)UserId), ct);
+        return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
+    }
 }

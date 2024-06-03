@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
+    <Folder Include="Dashboards\Commands\" />
     <Folder Include="ProjectMembers\Queries\" />
     <Folder Include="Projects\Queries\" />
     <Folder Include="ProjectTasks\Queries\" />

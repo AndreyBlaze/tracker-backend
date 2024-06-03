@@ -9,22 +9,22 @@ using Shared;
 
 namespace Application.ProjectTasks.Commands;
 
-public record CreateTaskCommand(ProjectTaskDTO Model, Guid UserId) : ICommand<ProjectTask>;
+public record UpdateTaskCommand(ProjectTaskDTO Model, Guid UserId) : ICommand<ProjectTask>;
 
-public class CreateTaskCommandHandler : ICommandHandler<CreateTaskCommand, ProjectTask>
+public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskCommand, ProjectTask>
 {
     private readonly ITasksRepository _tasksRepository;
     private readonly IProjectMembersRepository _membersRepository;
     private readonly ITaskColumnsRepository _columnsRepository;
 
-    public CreateTaskCommandHandler(ITasksRepository tasksRepository, IProjectMembersRepository membersRepository, ITaskColumnsRepository columnsRepository)
+    public UpdateTaskCommandHandler(ITasksRepository tasksRepository, IProjectMembersRepository membersRepository, ITaskColumnsRepository columnsRepository)
     {
         _tasksRepository = tasksRepository;
         _membersRepository = membersRepository;
         _columnsRepository = columnsRepository;
     }
 
-    public async Task<Result<ProjectTask>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ProjectTask>> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
     {
         var column = await _columnsRepository.GetByIdAsync(request.Model.ColumnId, cancellationToken);
 
@@ -36,16 +36,13 @@ public class CreateTaskCommandHandler : ICommandHandler<CreateTaskCommand, Proje
         if (member.Role != Domain.Types.ProjectRoleType.Owner && member.Role != Domain.Types.ProjectRoleType.Maintainer)
             return Result.Failure<ProjectTask>(ProjectMembersResult.AccessDenied());
 
-        request.Model.UserId = request.UserId;
         var model = ProjectTaskMapper.MapProjectTask(request.Model);
-        model.DateAdd = DateTimeOffset.UtcNow;
-        model.DateUpdate = DateTimeOffset.UtcNow;
 
         try
         {
-            var res = await _tasksRepository.AddAsync(model, cancellationToken);
+            var res = await _tasksRepository.UpdateAsync(model, cancellationToken);
 
-            if (res is null) return Result.Failure<ProjectTask>(new("ProjectTasks.ServerError", $"Error - Database Add error"));
+            if (res is null) return Result.Failure<ProjectTask>(new("ProjectTasks.ServerError", $"Error - Database Update error"));
 
             return Result.Success(res);
         }

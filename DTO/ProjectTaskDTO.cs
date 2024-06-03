@@ -11,4 +11,6 @@ public class ProjectTaskDTO
     public Guid ColumnId { get; set; }
     [Required]
     public Guid ProjectId { get; set; }
+
+    public Guid? UserId { get; set; }
 }

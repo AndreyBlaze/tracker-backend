@@ -18,6 +18,16 @@ public class User : BaseEntity
     public string Password { get; set; } = null!;
 
     /// <summary>
+    /// User's name
+    /// </summary>
+    public string Name { get; set; } = null!;
+
+    /// <summary>
+    /// User's surname
+    /// </summary>
+    public string Surname { get; set; } = null!;
+
+    /// <summary>
     /// User's email address
     /// </summary>
     [EmailAddress]

@@ -13,4 +13,6 @@ public class ProjectTaskDTO
     public Guid ProjectId { get; set; }
 
     public Guid? UserId { get; set; }
+
+    public DateTimeOffset? DeadLine { get; set; }
 }

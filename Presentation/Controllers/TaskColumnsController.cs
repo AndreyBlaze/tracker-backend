@@ -24,9 +24,9 @@ public class TaskColumnsController : BaseController
         return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
     }
 
-    [HttpGet]
+    [HttpGet("{boardId}")]
     [Authorize]
-    public async Task<IActionResult> GetByDashboardIdAsync(Guid boardId, CancellationToken ct)
+    public async Task<IActionResult> GetByDashboardIdAsync([FromRoute] Guid boardId, CancellationToken ct)
     {
         if (UserId is null) return Unauthorized();
 

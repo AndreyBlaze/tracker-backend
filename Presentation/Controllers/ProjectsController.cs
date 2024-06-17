@@ -49,4 +49,14 @@ public class ProjectsController : BaseController
         var res = await _mediator.Send(new GetAllProjectsQuery(filter, (Guid)UserId));
         return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
     }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken ct)
+    {
+        if (UserId is null) return Unauthorized();
+
+        var res = await _mediator.Send(new GetProjectByIdQuery(id), ct);
+        return res.IsSuccess ? Ok(res.Value) : BadRequest(res.Error);
+    }
 }

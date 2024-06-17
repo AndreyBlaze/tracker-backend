@@ -54,6 +54,7 @@ public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand,
     {
         Dashboard dashboard = new()
         {
+            Name = "Test",
             Id = Guid.NewGuid(),
             DateAdd = DateTimeOffset.UtcNow,
             DateUpdate = DateTimeOffset.UtcNow,

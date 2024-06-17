@@ -12,7 +12,8 @@ public static class ProjectTaskMapper
             ProjectId = task.ProjectId,
             ColumnId = task.ColumnId,
             Text = task.Text,
-            UserId = (Guid)task.UserId!
+            UserId = (Guid)task.UserId!,
+            DeadLine = task.DeadLine,
         };
     }
 }

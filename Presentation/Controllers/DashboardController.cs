@@ -12,9 +12,9 @@ public class DashboardController : BaseController
     {
     }
 
-    [HttpGet]
+    [HttpGet("{projectId}")]
     [Authorize]
-    public async Task<IActionResult> GetAsync(Guid projectId, CancellationToken ct)
+    public async Task<IActionResult> GetAsync([FromRoute] Guid projectId, CancellationToken ct)
     {
         if (UserId is null) return Unauthorized();
 

@@ -11,6 +11,8 @@ public class ProjectTask : BaseEntity
     [Required]
     public Guid UserId { get; set; }
 
+    public DateTimeOffset? DeadLine { get; set; }
+
     [Required]
     public Guid ProjectId { get; set; }
 
